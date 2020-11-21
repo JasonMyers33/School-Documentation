@@ -1,0 +1,143 @@
+CREATE TABLE public.Customer(
+CustomerID serial,
+CustFirstName varchar(30),
+CustLastName varchar(30),
+CustAddress varchar(255),
+CustEmail varchar(255),
+CustPhone varchar(10),
+CustRentalTotal smallint,
+CustRentalMonth smallint, 
+CustRentalYear smallint,
+PRIMARY KEY (CustomerID)
+);
+
+CREATE TABLE public.Discounts(
+DiscountID smallserial,
+DiscountRate decimal(5,2),
+DiscountDescription text,
+PRIMARY KEY (DiscountID)
+);
+
+CREATE TABLE public.Distributor(
+DistroID smallserial,
+DistroName varchar(30),
+PRIMARY KEY (DistroID)
+);
+
+CREATE TABLE public.MovieTitle(
+MovieTitleID serial,
+MovieTitle varchar(168),
+RunTime smallint,
+RealeaseYear int,
+Rating decimal(2,1),
+PRIMARY KEY (MovieTitleID)
+);
+
+CREATE TABLE public.Address(
+AddressID serial,
+CustomerID serial,
+Address varchar(255),
+City varchar(150),
+StateCode varchar(2),
+Zip	int,
+PRIMARY KEY (AddressID),
+FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
+
+CREATE TABLE public.Movie(
+MovieSN serial,
+MovieTitleID serial,
+MovieType varchar(3),
+RentalCost decimal(5,2),
+PRIMARY KEY (MovieSN),
+FOREIGN KEY (MovieTitleID) REFERENCES MovieTitle(MovieTitleID)
+);
+
+CREATE TABLE public.Genre(
+GenreID smallserial,
+MovieTitleID serial,
+GenreName varchar(30),
+PRIMARY KEY (GenreID),
+FOREIGN KEY (MovieTitleID) REFERENCES MovieTitle(MovieTitleID)
+);
+
+CREATE TABLE public.AcademyAwards(
+AwardID smallserial,
+MovieTitleID serial,
+AwardTitle varchar(35),
+PRIMARY KEY (AwardID),
+FOREIGN KEY (MovieTitleID) REFERENCES MovieTitle(MovieTitleID)
+);
+
+CREATE TABLE public.Actor(
+ActorID serial,
+MovieTitleID serial,
+ActorFirstName varchar(30),
+ActorLastName varchar(30),
+PRIMARY KEY (ActorID),
+FOREIGN KEY (MovieTitleID) REFERENCES MovieTitle(MovieTitleID)
+);
+
+CREATE TABLE public.Director(
+DirectorID serial,
+MovieTitleID serial,
+DirectorFirstName varchar(30),
+DirectorLastName varchar(30),
+PRIMARY KEY (DirectorID),
+FOREIGN KEY (MovieTitleID) REFERENCES MovieTitle(MovieTitleID)
+);
+
+CREATE TABLE public.Rental(
+Invoice serial,
+CustomerID serial,
+MovieSN serial,
+RentalStart date,
+RentalDue date,
+RentalEnd date,
+DiscountID smallserial,
+LateFee decimal(5,2),
+DamageFee decimal(5,2),
+ReqindFee decimal(5,2),
+Taxes decimal(3,2),
+Payment decimal(5,2),
+PRIMARY KEY (Invoice),
+FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+FOREIGN KEY (MovieSN) REFERENCES Movie(MovieSN),
+FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID)
+);
+
+CREATE TABLE public.DistributorCatalog(
+CatlogID smallserial,
+DistroID smallserial,
+DistroMovieTilte varchar(168),
+PRIMARY KEY (CatlogID),
+FOREIGN KEY (DistroID) REFERENCES Distributor(DistroID)
+);
+
+CREATE TABLE public.DistributorShipment(
+ShipmentID serial,
+DistroID smallserial, 
+OrderDate date,
+AriveDate date,
+PRIMARY KEY (ShipmentID),
+FOREIGN KEY (DistroID) REFERENCES Distributor(DistroID)
+);
+
+CREATE TABLE public.OrderDetails(
+OrderID serial,
+ShipmentID serial,
+DistroMovieTitle varchar(168),
+Quanity int,
+Price decimal(5,2), 
+PRIMARY KEY (OrderID),
+FOREIGN KEY (ShipmentID) REFERENCES DistributorShipment(ShipmentID)
+);
+
+CREATE TABLE public.SerialNumber(
+OrderSN serial,
+OrderID serial,
+DistroMovieSN varchar(50),
+PRIMARY KEY (OrderSN),
+FOREIGN KEY (OrderID) REFERENCES OrderDetails(OrderID)
+);
+

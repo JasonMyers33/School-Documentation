@@ -1,0 +1,115 @@
+/* #1 Table for Educational Attainment*/
+CREATE TABLE educational_attainment(
+YearID VARCHAR(50),
+Age	VARCHAR(50),
+Gender VARCHAR(10),
+EducationalAttainment VARCHAR(50),
+PersonalIncome VARCHAR(50),
+PopulationCount INT
+);
+
+/* #2 Table for Population Projection*/
+CREATE TABLE pop_proj(
+fips SMALLINT UNSIGNED,
+county VARCHAR(50),
+yearID SMALLINT UNSIGNED,
+age	TINYINT UNSIGNED,
+pop_female MEDIUMINT UNSIGNED,
+pop_male MEDIUMINT UNSIGNED,
+pop_total MEDIUMINT UNSIGNED
+);
+
+ /* #6 Table for Population Projection*/
+SELECT Age, 
+	SUM(PopulationCount) AS 'Total Population'
+FROM educational_attainment 
+GROUP BY Age
+LIMIT 10
+/* #6 RESULTS
+00 to 17	9787619
+18 to 64	151806895
+65 to 80+	28772453
+*/
+
+ /* #7 Table for Type of Education Attained*/
+WITH VIEW AS(
+	SELECT Age, 
+		SUM(PopulationCount) AS TotalPopulation 
+	FROM educational_attainment 
+	GROUP BY Age 
+	)
+SELECT Age, EducationalAttainment, 
+	SUM(PopulationCount)/(SELECT TotalPopulation
+      FROM VIEW AS nest
+      WHERE nest.Age = edu.Age) AS coefficient
+FROM educational_attainment AS edu
+GROUP BY Age, EducationalAttainment
+	LIMIT 10
+/* #7 RESULTS
+00 to 17	No high school diploma	0.9774
+00 to 17	Some college, less than 4-yr degree	0.0094
+00 to 17	High school or equivalent	0.0117
+18 to 64	No high school diploma	0.1670
+18 to 64	High school or equivalent	0.2344
+18 to 64	Some college, less than 4-yr degree	0.2954
+18 to 64	Bachelor's degree or higher	0.3032
+65 to 80+	No high school diploma	0.1998
+65 to 80+	High school or equivalent	0.2520
+65 to 80+	Some college, less than 4-yr degree	0.2503
+*/
+
+ /*#8 Table for Type of Education Attained*/
+CREATE TABLE demographics AS (
+WITH VIEW AS(
+	SELECT Age, 
+		SUM(PopulationCount) AS TotalPopulation 
+	FROM educational_attainment 
+	GROUP BY Age 
+	)
+SELECT Age, EducationalAttainment, 
+	SUM(PopulationCount)/(SELECT TotalPopulation
+      FROM VIEW AS nest
+      WHERE nest.Age = edu.Age) AS coefficient
+FROM educational_attainment AS edu
+GROUP BY Age, EducationalAttainment
+);
+
+ /*#9 Table for Type of Education Attained*/
+SELECT age, yearid, SUM(pop_total)
+	FROM pop_proj
+	GROUP BY age, yearid
+	LIMIT 10;
+/* #9 RESULTS
+0	1970	17204
+1	1970	16403
+2	1970	15768
+3	1970	16430
+4	1970	17199
+5	1970	18220
+6	1970	19273
+7	1970	19274
+8	1970	19656
+9	1970	19811
+*/
+
+ /*#10 Table for Type of Education Attained*/
+SELECT ROUND(SUM(temp_pop.total_pop * demographics.coefficient),0) AS demand, demographics.age, demographics.coefficient, demographics.educationalattainment, yearid
+	FROM demographics join (
+		SELECT age, yearid, sum(pop_total)
+			 AS total_pop 
+				 FROM pop_proj 
+				 GROUP BY yearid, age)
+		 AS temp_pop WHERE 
+			demographics.age = 
+				CASE
+					when temp_pop.age < 18 then '00 to 17'
+					when temp_pop.age > 64 then '65 to 80+'
+					else '18 to 64'
+				end
+	GROUP BY educationalattainment
+/* #10 RESULTS
+9406281	00 to 17	0.9774	No high school diploma	1970
+5183522	00 to 17	0.0094	Some college, less than 4-yr degree	1970
+4268665	00 to 17	0.0117	High school or equivalent	1970
+5365480	00 to 17	0.0015	Bachelor's degree or higher	1970
+*/

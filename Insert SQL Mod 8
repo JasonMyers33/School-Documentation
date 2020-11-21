@@ -1,0 +1,185 @@
+INSERT INTO Customer (CustomerID, CustFirstName, CustLastName, CustEmail, CustPhone, CustRentalTotal, CustRentalMonth, CustRentalYear)
+VALUES
+	(1, 'Rebbecca', 'Didio', 'rebbecca.didio@didio.com.au', '3038174923', 3, 2, 0),
+	(2, 'Stevie', 'Hallo', 'stevie.hallo@hotmail.com', '3079997366', 2,2,2),
+	(3, 'Mariko', 'Stayer',  'mariko_stayer@hotmail.com', '308589019', 5,1,2),
+	(4, 'Gerardo', 'Woodka', 'gerardo_woodka@hotmail.com', '3020444682', 3,1,2),
+	(5, 'Mayra', 'Bena', 'mayra.bena@gmail.com', '3021455685', 1,1,1);
+
+INSERT INTO Address (AddressID, CustomerID, Address, City, StateCode, Zip)
+VALUES
+	(1, 1, '171 E 24th', 'St Leith', 'CO', 80918),
+	(2, 1, '68828 S 32nd St #6', 'Rosegarland', 'CO', 80908),
+	(3, 2, '22222 Acoma St', 'Proston', 'CO',  80916),
+	(4, 3, '534 Schoenborn St #51', 'Hamel', 'WA', 10256),
+	(5, 4, '69206 Jackson Ave', 'Talmalmo', 'TX',  08461),
+	(6, 5, '808 Glen Cove Ave', 'Lane Cove', 'MA' 23568); 
+
+INSERT INTO Discounts (DiscountID, DiscountRate, DiscountDescription)
+VALUES
+	(1, 0.10, 'Second movie rental in a month.'),
+	(2, 0.20, 'Second movie rental in a week.'),
+	(3, 0.30, 'Discount on a 12th movie.'),
+	(4, 0.50, '1/2 off birthday rental'),
+	(5, 1.00, 'Free movie night'),
+	(6, 0.00, 'No Discount for you');
+	
+INSERT INTO Distributor (DistroID, DistroName)
+VALUES
+	(1, 'Movie on the Cheap'),
+	(2, 'Movies, Movies, Movies'),
+	(3, 'Rentals for Sale'),
+	(4, 'BuyUMovies'),
+	(5, 'Discount Movies');
+
+INSERT INTO MovieTitle (MovieTitleID, MovieTitle, RunTime, RealeaseYear, Rating)
+VALUES
+	(1, 'Crawl', 87, 2019, 2.4),
+	(2, 'Midsommar', 148, 2019, 3.6),
+	(3, 'Alita: Battle Angel', 122, 2019, 3.9),
+	(4, 'John Wick: Chapter 3 - Parabellum', 130, 2019, 4.5),
+	(5, 'Irishman, The', 209, 2019, 4.3),
+	(6, 'Parasite', 132, 2019, 4.8);
+	
+INSERT INTO Movie (MovieSN, MovieTitleID, MovieType, RentalCost)
+VALUES
+	(1, 1, 'DVD', 4.99),
+	(2, 1, 'DVD', 4.99),
+	(3, 1, 'DVD', 4.99),
+	(4, 1, 'VHS', 3.99),
+	(5, 1, 'VHS', 3.99),
+	(6, 2, 'DVD', 4.99),
+	(7, 2, 'DVD', 4.99),
+	(8, 3, 'DVD', 4.99),
+	(9, 3, 'DVD', 4.99),
+	(10, 4, 'DVD', 4.99),
+	(11, 4, 'DVD', 4.99),
+	(12, 5, 'DVD', 4.99),
+	(13, 6, 'DVD', 4.99),
+	(14, 6, 'DVD', 4.99),
+	(15, 3, 'VHS', 3.99),
+	(16, 4, 'VHS', 3.99);
+
+INSERT INTO Genre (GenreID, MovieTitleID, GenreName)
+VALUES
+	(1, 1, 'Drama'), 
+	(2, 1, 'Horror'),
+	(3, 1, 'Thriller'),
+	(4, 2, 'Drama'),
+	(5, 2, 'Horror'),
+	(6, 2, 'Mystery'),
+	(7, 2, 'Thriller'),
+	(8, 3, 'Action'),
+	(9, 3, 'Adventure'), 
+	(10, 3, 'Sci-Fi'), 
+	(11, 3, 'Thriller'),
+	(12, 4, 'Action'), 
+	(13, 4, 'Crime'), 
+	(14, 4, 'Thriller'),
+	(15, 5, 'Biography'),
+	(16, 5, 'Crime'), 
+	(17, 5, 'Drama'),
+	(18, 6, 'Comedy'), 
+	(19, 6, 'Drama'),
+	(20, 6, 'Thriller');
+
+INSERT INTO AcademyAwards (AwardID, MovieTitleID, AwardTitle)
+VALUES
+	(1, 1, NULL),
+	(2, 2, NULL),
+	(3, 3, NULL),
+	(4, 4, NULL),
+	(5, 5, NULL),
+	(6, 6, 'Best Motion Picture of the Year'),
+	(7, 6, 'Best Achievement in Directing'),
+	(8, 6, 'Best Original Screenplay'),
+	(9, 6, 'Best International Feature Film');
+
+INSERT INTO Actor (ActorID, MovieTitleID, ActorFirstName, ActorLastName)
+VALUES
+	(1, 1, 'Barry', 'Pepper'),
+	(2, 2, 'Jack', 'Reynor'),
+	(3, 3, 'Christoph', 'Waltz'),
+	(4, 4, 'Keanu', 'Reeves'),
+	(5, 5, 'Robert', 'De Niro'),
+	(6, 1, 'Anna', 'Paquin'),
+	(7, 2, 'Halle', 'Berry'),
+	(8, 3, 'Rosa', 'Salazar'),
+	(9, 4, 'Florence', 'Pugh'),
+	(10, 5, 'Kaya', 'Scodelario'),
+	(11, 6, 'Kang-ho', 'Song'),
+	(12, 6, 'Yeo-jeong', 'Jo');
+	
+INSERT INTO Director (DirectorID, MovieTitleID, DirectorFirstName, DirectorLastName)
+VALUES
+	(1, 1, 'Alexandre', 'Aja'), 
+	(2, 2, 'Ari', 'Aster'),
+	(3, 3, 'Robert', 'Rodriguez'),
+	(4, 4, 'Chad', 'Stahelski'),
+	(5, 5, 'Martin', 'Scorsese'),
+	(6, 6, 'Bong Joon', 'Ho');
+
+INSERT INTO Rental (Invoice, CustomerID, MovieSN, RentalStart, RentalDue, RentalEnd, DiscountID, LateFee, DamageFee, ReqindFee, Taxes, Payment)
+VALUES
+	(1, 1, 1, '2020-05-17', '2020-5-20', '2020-5-19', 1, NULL, NULL, NULL, 0.07, 4.80),
+	(2, 3, 3, '2020-06-01', '2020-06-04', '2020-06-05', 6, 2.00, NULL, NULL, 0.07, 7.34),
+	(3, 4, 14, '2019-08-12', '2019-08-15', '2020-01-05', 6, 35.00, 15.00, 3.00, 0.07, 57.27),
+	(4, 2, 10, '2020-03-21', '2020-03-24', '2020-03-24', 4, NULL, NULL, NULL, 0.07, 2.67),
+	(5, 2, 7, '2020-06-01', '2020-06-04', '2020-06-05', 5, NULL, NULL, NULL, 0.07, 0.00);
+
+INSERT INTO DistributorCatalog (CatlogID, DIstroID, DistroMovieTilte)
+VALUES
+	(1, 1, 'Classical Period'),
+	(2, 1, 'Leave No Trace'),
+	(3, 1, 'Private Life'),
+	(4, 1, 'Hereditary'),
+	(5, 1, 'Quiet Place, A'),
+	(6, 1, 'Unsane'),
+	(7, 1, 'Her Smell'),
+	(8, 1, 'Star is Born, A'),
+	(9, 2, 'Babysitter, The'),
+	(10, 2, 'Three Billboards Outside Ebbing, Missouri'),
+	(11, 2, 'Detroit'),
+	(12, 2, 'Gemini'),
+	(13, 2, 'Twin Peaks: The Return [TV]'),
+	(14, 2, 'Good Time'),
+	(15, 3, 'Deadpool'),
+	(16, 3, 'Doctor Strange'),
+	(17, 3, 'Rogue One: A Star Wars Story'),
+	(18, 3, 'Star Trek Beyond'),
+	(19, 3, 'Captain America: Civil War');
+
+INSERT INTO DistributorShipment (ShipmentID, DistroID, OrderDate, AriveDate)
+VALUES
+	(1, 1, '2020-03-01', '2020-03-15'),
+	(2, 2, '2020-04-01', '2020-04-10'),
+	(3, 1, '2020-04-01', '2020-04-20'),
+	(4, 5, '2020-05-01', '2020-05-25'),
+	(5, 5, '2020-06-01', NULL);
+	
+INSERT INTO OrderDetails (OrderID, ShipmentID, DistroMovieTitle, Quanity, Price)
+VALUES
+	(1, 1, 'Quiet Place, A', 2, 56.00),
+	(2, 1, 'Twin Peaks: The Return [TV]', 4, 35.00),
+	(3, 2, 'Doctor Strange', 5, 45.00),
+	(4, 3, 'Rogue One: A Star Wars Story', 35, 5.00),
+	(5, 4, 'Weiner', 1, 5.00),
+	(6, 4, 'Chappie', 2, 15.00),
+	(7, 4, 'Jurassic World', 10, 50.00),
+	(8, 4, 'Inside Out', 8, 45.00),
+	(9, 4, 'World of Tomorrow', 3, 13.00),
+	(10, 5, 'Straight Outta Compton', 3, 15.00);
+
+INSERT INTO SerialNumber (OrderSN, OrderID, DistroMovieSN)
+VALUES
+	(1, 1, 'QP2019102022'),
+	(2, 1, 'QP2019102023'),
+	(3, 2, 'TP2016110240'),
+	(4, 2, 'TP2016110242'),
+	(5, 2, 'TP2016110243'),
+	(6, 2, 'TP2016110252'),
+	(7, 3, 'DS2017110262'),
+	(8, 3, 'DS2017110263'),
+	(9, 3, 'DS2017110268'),
+	(10, 3, 'DS2017110270'),
+	(11, 3, 'DS2017110272');

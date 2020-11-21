@@ -1,0 +1,25 @@
+SELECT Customer.CustomerID, Customer.CustFirstName, Customer.CustlastName, Address.Address, Address.Zip
+	FROM Customer 
+	INNER JOIN Address ON Customer.CustomerID = Address.CustomerID
+ORDER BY CustomerID ASC;
+
+SELECT Movie.MovieType, MovieTitle.MovieTitle, Rental.RentalStart
+	FROM Movie
+	INNER JOIN Movietitle
+		ON Movie.MovieTitleID = MovieTitle.MovieTitleID
+	INNER JOIN Rental 
+		ON Rental.MovieSN = Movie.MovieSN
+		WHERE RentalStart > Current_Date -30
+ORDER BY RentalStart DESC;
+
+UPDATE Customer 
+	SET CustLastName = 'Bewley'
+	WHERE CustomerID = 3;
+
+SELECT Customer.CustomerID, Customer.CustFirstName, Customer.CustlastName
+	FROM Customer
+	
+DELETE FROM Address
+WHERE CustomerID = 5;
+DELETE FROM Customer
+WHERE CustomerID = 5;
