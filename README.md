@@ -1,4 +1,5 @@
 # School-Documentation
+
 Projects from school
 
 Program Name:Python Home Inventory program.
